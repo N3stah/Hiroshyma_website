@@ -1,0 +1,31 @@
+# Render Blueprint. In the Render dashboard: New -> Blueprint -> point at
+# this repo, and Render provisions the web service from this file.
+# You still add the secret env vars (DATABASE_URL, CLOUDINARY_*, SECRET_KEY)
+# manually in the dashboard -- never commit real secrets here.
+
+services:
+  - type: web
+    name: hiroshyma-oyk-api
+    runtime: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: hiroshyma-oyk-api.onrender.com
+      - key: FRONTEND_URL
+        sync: false   # set manually once the Vercel URL exists
+      - key: DATABASE_URL
+        sync: false   # paste Neon connection string
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

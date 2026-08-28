@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/* ===================================================================
+   HIROSHYMA.OYK -- "BRUTALIST NEO-CYBER" DESIGN SYSTEM
+   Brutalism (raw structure) + Neo-Classical (disciplined ornament)
+   + Cybercore (electric interactivity)
+   =================================================================== */
+
+:root {
+  /* Brutalist base -- true black, not warm gray */
+  --hiro-bg: #000000;
+  --hiro-surface: #0A0A0A;
+  --hiro-raised: #141414;
+  --hiro-border: #FFFFFF;      /* thick white borders, brutalist signature */
+  --hiro-border-dim: #2A2A2A;
+  --hiro-text: #F5F3EE;
+  --hiro-muted: #8A8A8A;
+
+  /* Cybercore accent -- used ONLY for interactive/hover states */
+  --hiro-cyber: #00F0FF;
+  --hiro-cyber-dim: #0891A0;
+
+  /* Neo-classical accent -- used ONLY for dividers and ornamental framing */
+  --hiro-gold: #C9A227;
+
+  /* Legacy alias so existing components using --hiro-accent still work */
+  --hiro-accent: var(--hiro-cyber);
+  --hiro-accent-hover: #33F5FF;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--hiro-bg);
+  color: var(--hiro-text);
+  -webkit-font-smoothing: antialiased;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+h1, h2, h3, .font-display {
+  font-family: "Fraunces", Georgia, serif;
+}
+
+/* Brutalist thick-border utility -- use on hero blocks, cards, section dividers */
+.brutal-border { border: 3px solid var(--hiro-border); }
+.brutal-border-dim { border: 1px solid var(--hiro-border-dim); }
+
+/* Neo-classical ornamental divider -- thin gold rule, used sparingly */
+.ornament-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hiro-gold), transparent);
+}
+
+/* Cybercore interactive glow -- replaces soft drop-shadows */
+.cyber-glow { transition: box-shadow 200ms, border-color 200ms, color 200ms; }
+.cyber-glow:hover {
+  box-shadow: 0 0 16px 0 var(--hiro-cyber-dim);
+  border-color: var(--hiro-cyber) !important;
+  color: var(--hiro-cyber) !important;
+}
+
+/* Scanline texture -- apply to large dark surfaces (hero, footer) sparingly */
+.scanlines {
+  position: relative;
+}
+.scanlines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Link utilities */
+.link-muted { color: var(--hiro-muted); transition: color 150ms; }
+.link-muted:hover { color: var(--hiro-cyber); }
+.link-logo { color: var(--hiro-text); transition: color 150ms; font-family: "Fraunces", serif; }
+.link-logo:hover { color: var(--hiro-cyber); }
+.link-accent { color: var(--hiro-cyber); transition: color 150ms; }
+.link-accent:hover { color: var(--hiro-accent-hover); }
+
+/* Buttons -- brutalist rectangles, cybercore hover glow, no rounded corners ever */
+.btn-primary {
+  display: inline-block;
+  padding: 0.85rem 2.25rem;
+  font-size: 0.7rem;
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background-color: var(--hiro-cyber);
+  color: #000000;
+  border: 3px solid var(--hiro-cyber);
+  transition: background-color 150ms, box-shadow 150ms;
+}
+.btn-primary:hover {
+  background-color: #000000;
+  color: var(--hiro-cyber);
+  box-shadow: 0 0 20px 0 var(--hiro-cyber-dim);
+}
+
+.btn-outline {
+  display: inline-block;
+  padding: 0.85rem 2.25rem;
+  font-size: 0.7rem;
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: 3px solid var(--hiro-border);
+  color: var(--hiro-text);
+  transition: border-color 150ms, color 150ms, box-shadow 150ms;
+}
+.btn-outline:hover {
+  border-color: var(--hiro-cyber);
+  color: var(--hiro-cyber);
+  box-shadow: 0 0 20px 0 var(--hiro-cyber-dim);
+}
+
+.btn-ghost {
+  display: inline-block;
+  padding: 0.85rem 2.75rem;
+  font-size: 0.7rem;
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: 1px solid var(--hiro-gold);
+  color: var(--hiro-gold);
+  transition: background-color 150ms, color 150ms;
+}
+.btn-ghost:hover { background-color: var(--hiro-gold); color: #000000; }
+
+.card-hover { border: 1px solid var(--hiro-border-dim); transition: border-color 150ms, box-shadow 150ms; }
+.card-hover:hover { border-color: var(--hiro-cyber); box-shadow: 0 0 16px 0 var(--hiro-cyber-dim); }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--hiro-bg); }
+::-webkit-scrollbar-thumb { background: var(--hiro-cyber); }
+::selection { background: var(--hiro-cyber); color: #000000; }
+
+/* WhatsApp button -- green brand color, CSS-only hover, no JS event handlers */
+.whatsapp-btn {
+  border: 3px solid #25D366;
+  color: #25D366;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: background-color 150ms, color 150ms;
+}
+.whatsapp-btn:hover {
+  background-color: #25D366;
+  color: #000000;
+}

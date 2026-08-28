@@ -1,0 +1,4 @@
+Place Kevin s logo as favicon.ico here.
+Recommended: convert LOGO.jpeg to favicon.ico at https://favicon.io
+Minimum size: 32x32px
+Also add icon.png (512x512) for the web app manifest.
