@@ -10,7 +10,11 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   let settings: SiteSettings | null = null;
-  try { settings = await getSiteSettings(); } catch { /* renders with fallbacks */ }
+  try {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 8000);
+    settings = await getSiteSettings();
+  } catch { /* renders with static fallbacks */ }
 
   const phone = settings?.phone || "";
   const whatsapp = settings?.whatsapp || "";

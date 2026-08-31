@@ -38,9 +38,21 @@ function FeaturedCard({ product }: { product: ProductListItem }) {
 export default async function HomePage() {
   let featured: ProductListItem[] = [];
   try {
-    featured = await getFeaturedProducts();
+    // 8-second timeout prevents hanging during Vercel static build
+    // when the backend hasn't warmed up yet
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products/featured/`,
+      { next: { revalidate: 60 }, signal: controller.signal }
+    );
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      featured = data.results ?? [];
+    }
   } catch {
-    // renders without featured section if API is unreachable
+    // renders without featured section if API is unreachable or slow
   }
 
   return (
