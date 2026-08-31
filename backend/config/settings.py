@@ -117,11 +117,15 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # CORS
+CORS_URLS_REGEX = r"^/api/.*$"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     config("FRONTEND_URL", default="http://localhost:3000"),
 ]
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
+CSRF_TRUSTED_ORIGINS = list(CORS_ALLOWED_ORIGINS) + ["https://hiroshyma-website.onrender.com"]
 
 # Django REST Framework
 REST_FRAMEWORK = {
@@ -154,6 +158,7 @@ CLOUDINARY_STORAGE = {
 
 # Production-only security hardening (inactive while DEBUG=True)
 if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
