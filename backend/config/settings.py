@@ -101,7 +101,11 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage"
+        "BACKEND": (
+            "cloudinary_storage.storage.MediaCloudinaryStorage"
+            if config("CLOUDINARY_CLOUD_NAME", default="")
+            else "django.core.files.storage.FileSystemStorage"
+        ),
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -145,8 +149,8 @@ CLOUDINARY_STORAGE = {
     "API_KEY": config("CLOUDINARY_API_KEY", default=""),
     "API_SECRET": config("CLOUDINARY_API_SECRET", default=""),
 }
-if config("CLOUDINARY_CLOUD_NAME", default=""):
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# Cloudinary storage is now set inside STORAGES (Django 5 requirement)
+# DEFAULT_FILE_STORAGE is removed -- it conflicts with STORAGES
 
 # Production-only security hardening (inactive while DEBUG=True)
 if not DEBUG:
