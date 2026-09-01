@@ -158,8 +158,10 @@ CLOUDINARY_STORAGE = {
 
 # Production-only security hardening (inactive while DEBUG=True)
 if not DEBUG:
+    # Render terminates SSL at the load balancer and forwards via proxy header.
+    # SECURE_SSL_REDIRECT is intentionally omitted -- it causes 400s because
+    # gunicorn sees plain HTTP internally even though the user is on HTTPS.
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
