@@ -16,7 +16,7 @@ from . import admin_branding  # noqa: F401 -- applies site_header/site_title on 
 
 urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
-    path("admin/", admin.site.urls),
+    path("aetsh-69-admin/", admin.site.urls),
     path("api/", include("catalog.urls")),
     path("api/", include("inquiries.urls")),
     path("api/", include("portfolio_app.urls")),
