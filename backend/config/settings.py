@@ -175,3 +175,24 @@ CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "'unsafe-eval'") # Next.js dev/pr
 CSP_IMG_SRC = ("'self'", "https://res.cloudinary.com")
 CSP_FONT_SRC = ("'self'",)
 CSP_CONNECT_SRC = ("'self'",)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+}
