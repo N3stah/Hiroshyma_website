@@ -3,20 +3,16 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig = {
   typescript: {
-    // Turbopack and tsc conflict on directive strings in Next.js 16 --
-    // ignoreBuildErrors unblocks the build; type safety still enforced in dev.
+    // Turbopack and tsc conflict on directive strings in Next.js 16;
+    // type safety is still enforced in dev.
     ignoreBuildErrors: true,
   },
   images: {
-    // In dev, skip the optimizer entirely so localhost media URLs load
-    // without hitting Next.js 16 SSRF protection on 127.0.0.1
+    // Dev: serve Django media as-is. Production: Cloudinary resizes and converts
+    // images itself via the custom loader, so they load straight from Cloudinary.
     unoptimized: isDev,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-    ],
+    loader: "custom",
+    loaderFile: "./src/lib/cloudinaryLoader.ts",
   },
   async headers() {
     return [
