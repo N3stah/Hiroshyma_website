@@ -7,8 +7,18 @@ from .models import CustomInquiry
 from .serializers import CustomInquirySerializer
 
 
+def client_ip(group, request):
+    """Render proxies every request, so REMOTE_ADDR is always 127.0.0.1.
+    Use the first X-Forwarded-For entry (the real visitor) so each visitor
+    gets their own limit instead of the whole site sharing one."""
+    forwarded = request.META.get("HTTP_X_FORWARDED_FOR", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.META.get("REMOTE_ADDR", "")
+
+
 @method_decorator(
-    ratelimit(key="ip", rate="5/h", method="POST", block=False), name="post"
+    ratelimit(key=client_ip, rate="5/h", method="POST", block=False), name="post"
 )
 class CustomInquiryCreateView(generics.CreateAPIView):
     """

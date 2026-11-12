@@ -155,3 +155,13 @@ h1, h2, h3, .font-display {
   background-color: #25D366;
   color: #000000;
 }
+
+/* Slide-down reveal for category switches and slideshow panels */
+@keyframes reveal-down { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+.reveal-card { animation: reveal-down 450ms ease-out both; }
+
+/* Slideshow progress line, restarts on every slide */
+@keyframes progress-fill { from { width: 0; } to { width: 100%; } }
+.progress-bar { animation: progress-fill 4000ms linear both; }
+
+@media (prefers-reduced-motion: reduce) { .reveal-card, .progress-bar { animation: none; } }

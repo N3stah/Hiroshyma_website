@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/api";
+import { whatsappLink, productOrderMessage } from "@/lib/whatsapp";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -71,7 +72,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           )}
           <p className="text-sm leading-relaxed mb-8" style={{ color: "var(--hiro-muted)" }}>{product.description}</p>
           {product.in_stock ? (
-            <Link href={`/custom-order?ref=${product.slug}`} className="btn-primary">Enquire to Order</Link>
+            <div className="flex flex-col sm:flex-row gap-3"><a href={whatsappLink(productOrderMessage(product.name, product.slug, product.price))} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 whatsapp-btn">Order on WhatsApp</a><Link href={`/custom-order?ref=${product.slug}`} className="btn-outline text-center">Custom Order</Link></div>
           ) : (
             <span className="inline-block px-8 py-3 text-xs uppercase tracking-widest" style={{ backgroundColor: "var(--hiro-surface)", color: "var(--hiro-muted)" }}>Sold Out</span>
           )}
